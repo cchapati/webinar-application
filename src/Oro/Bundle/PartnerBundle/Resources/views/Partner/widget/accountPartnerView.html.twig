@@ -1,0 +1,56 @@
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% import 'OroEntityConfigBundle::macros.html.twig' as entityConfig %}
+
+<div class="widget-content">
+    <div class="row-fluid form-horizontal">
+        <div class="responsive-block">
+            {% if partner %}
+                {% set gitHubAccountData %}
+                    {% if partner.gitHubAccount %}
+                        <a target="_blank" href="{{ "http://github.com/%s"|format(partner.gitHubAccount) }}">
+                            {{ partner.gitHubAccount|escape }}
+                        </a>
+                    {% else %}
+                        {{ 'N/A'|trans }}
+                    {% endif %}
+                {% endset %}
+                {{ UI.renderHtmlProperty('oro.partner.git_hub_account.label'|trans, gitHubAccountData) }}
+                {{ UI.renderProperty('oro.partner.partnership_started_at.label'|trans, partner.partnershipStartedAt|oro_format_date) }}
+                {{ entityConfig.renderDynamicFields(partner) }}
+            {% endif %}
+
+            {% if partner %}
+                {% set buttonTitle = 'oro.partner.update_button'|trans %}
+                {% set dialogTitle = 'oro.partner.update_dialog'|trans %}
+                {% set widgetUrl = path('oro_partner_update', {'id': partner.id}) %}
+            {% else %}
+                {% set buttonTitle = 'oro.partner.create_button'|trans %}
+                {% set dialogTitle = 'oro.partner.create_dialog'|trans %}
+                {% set widgetUrl = path('oro_partner_account_create', {'accountId': account.id}) %}
+            {% endif %}
+
+            {{ UI.clientButton({
+                'dataUrl': widgetUrl,
+                'aCss': 'no-hash',
+                'dataId': 2,
+                'title' : buttonTitle,
+                'label' : buttonTitle,
+                'widget' : {
+                    'type' : 'dialog',
+                    'multiple' : false,
+                    'options' : {
+                        'alias': 'partner-dialog',
+                        'dialogOptions' : {
+                            'title' : dialogTitle,
+                            'allowMaximize': true,
+                            'allowMinimize': true,
+                            'dblclick': 'maximize',
+                            'maximizedHeightDecreaseBy': 'minimize-bar',
+                            'width': 500
+                        }
+                    }
+                },
+            }) }}
+        </div>
+    </div>
+</div>

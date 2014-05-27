@@ -1,0 +1,11 @@
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
+{% set content %}
+    {{ oro_widget_render({
+        'widgetType': 'block',
+        'url': path('oro_partner_account_view', {accountId: entity.id}),
+        'title': 'oro.partner.block_title'|trans,
+        'alias': 'partner-view'
+    }) }}
+{% endset %}
+{{ UI.scrollSubblock(null, [content]) }}

@@ -1,0 +1,4 @@
+oro_partner_bundle:
+    resource:     "@OroPartnerBundle/Controller"
+    type:         annotation
+    prefix:       /partner

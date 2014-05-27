@@ -1,0 +1,18 @@
+parameters:
+    oro_partner.entity.class: Oro\Bundle\PartnerBundle\Entity\Partner
+    oro_partner.twig.partner_extension.class: Oro\Bundle\PartnerBundle\Twig\PartnerExtension
+    oro_partner.form.type.partner.class: Oro\Bundle\PartnerBundle\Form\Type\PartnerType
+
+services:
+    oro_partner.twig.partner_extension:
+        class: %oro_partner.twig.partner_extension.class%
+        arguments:
+            - @doctrine
+            - %oro_partner.entity.class%
+        tags:
+            - { name: twig.extension }
+
+    oro_partner.form.type.partner:
+        class: %oro_partner.form.type.partner.class%
+        tags:
+            - { name: form.type, alias: oro_partner }

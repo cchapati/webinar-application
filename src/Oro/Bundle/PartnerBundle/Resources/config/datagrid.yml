@@ -1,0 +1,18 @@
+datagrid:
+    accounts-grid:
+        source:
+            query:
+                select:
+                    - CASE WHEN partner.id IS NOT NULL THEN 1 ELSE 0 END as hasPartnership
+                join:
+                    left:
+                       - { join: %oro_partner.entity.class%, alias: partner, conditionType: 'WITH', condition: 'partner.account = a.id' }
+        columns:
+            hasPartnership:
+                label: oro.partner.has_partnership_column
+                renderable: false
+        filters:
+            columns:
+                hasPartnership:
+                    type:      boolean
+                    data_name: hasPartnership

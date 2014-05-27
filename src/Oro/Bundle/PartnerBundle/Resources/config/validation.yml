@@ -1,0 +1,4 @@
+Oro\Bundle\PartnerBundle\Entity\Partner:
+    properties:
+        partnershipStartedAt:
+            - NotBlank: ~

@@ -1,0 +1,57 @@
+<div class="widget-content">
+    {% if success|default(false) %}
+        <script type="text/javascript">
+            require(['underscore', 'orotranslation/js/translator', 'oroui/js/widget-manager',
+                'oroui/js/messenger', 'oroui/js/mediator'],
+            function(_, __, widgetManager, messenger, mediator) {
+                widgetManager.getWidgetInstance({{ app.request.get('_wid')|json_encode|raw }}, function(widget) {
+                    messenger.notificationFlashMessage(
+                        'success',
+                        {{ 'oro.partner.save_success_message'|trans|json_encode|raw }}
+                    );
+                    mediator.trigger('widget_success:' + widget.getAlias());
+                    mediator.trigger('widget_success:' + widget.getWid());
+                    widget.remove();
+                });
+
+                widgetManager.getWidgetInstanceByAlias('partner-view', function(widget) {
+                    widget.loadContent();
+                });
+            });
+        </script>
+    {% else %}
+        {% if not form.vars.valid and form.vars.errors|length %}
+            <div class="alert alert-error">
+                <div class="message">
+                    {{ form_errors(form) }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="form-container">
+            {% if entity.id %}
+                {% set formUrl = path('oro_partner_update', {'id': entity.id }) %}
+            {% else %}
+                {% set formUrl = path('oro_partner_account_create', {'accountId': entity.account.id }) %}
+            {% endif %}
+            <form id="{{ form.vars.name }}" action="{{ formUrl }}" method="post">
+                <fieldset class="form form-horizontal">
+                    {{ form_row(form.partnershipStartedAt) }}
+                    {{ form_row(form.gitHubAccount) }}
+
+                    {% if form.additional is defined and form.additional.children|length > 0 %}
+                        {% for value in form.additional %}
+                            {{ form_row(value) }}
+                        {% endfor %}
+                    {% endif %}
+
+                    {{ form_rest(form) }}
+                    <div class="widget-actions form-actions">
+                        <button class="btn" type="reset">{{ 'oro.partner.cancel_button'|trans }}</button>
+                        <button class="btn btn-primary" type="submit">{{ 'oro.partner.submit_button'|trans }}</button>
+                    </div>
+                </fieldset>
+            </form>
+            {{ oro_form_js_validation(form) }}
+        </div>
+    {% endif %}
+</div>

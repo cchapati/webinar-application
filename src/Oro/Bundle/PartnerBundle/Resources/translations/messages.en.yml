@@ -1,0 +1,21 @@
+oro:
+    partner:
+        # Oro/Bundle/PartnerBundle/Entity/Partner
+        entity_label:                 Partner
+        entity_plural_label:          Partners
+        entity_description:           Represent partner
+        id.label:                     ID
+        partnership_started_at.label: Partnership Started At
+        git_hub_account.label:        GitHub Account
+        account.label:                Account
+
+        block_title:                  Partnership Data
+        create_button:                Add Partnership
+        create_dialog:                Create Partner
+        update_button:                Update
+        update_dialog:                Update Partner
+        submit_button:                Submit
+        cancel_button:                Cancel
+        save_success_message:         Partnership data successfully saved.
+
+        has_partnership_column:       Has Partnership
