@@ -21,7 +21,7 @@ class PartnerController extends Controller
      * @ParamConverter("account", options={"id" = "accountId"})
      * @Template
      */
-    public function accountPartnerViewAction(Account $account)
+    public function viewAction(Account $account)
     {
         $repository = $this->getDoctrine()->getRepository('OroPartnerBundle:Partner');
         $partner = $repository->findOneByAccount($account);
@@ -30,8 +30,6 @@ class PartnerController extends Controller
             'partner' => $partner,
         );
     }
-
-
 
     /**
      * @Route("/account/{accountId}/create", name="oro_partner_account_create", requirements={"accountId"="\d+"})
